@@ -1,0 +1,52 @@
+# =========================
+# CEF / Native Builds
+# =========================
+out/
+out_debug/
+out_release/
+*.exe
+*.dll
+*.so
+*.dylib
+*.o
+*.a
+
+# =========================
+# Browser Runtime Artifacts
+# =========================
+browser/bin/
+browser/cache/
+browser/user-data/
+browser/logs/
+
+# =========================
+# Daemon Runtime Artifacts
+# =========================
+daemon/logs/
+daemon/runtime/
+daemon/tmp/
+
+# =========================
+# AI / ML Artifacts
+# =========================
+models/
+runtime/models/
+*.gguf
+*.bin
+*.onnx
+*.pt
+*.safetensors
+
+# =========================
+# Sandbox / Execution
+# =========================
+sandbox/
+sandbox-*/
+tmp/
+*.trace
+*.audit
+
+# =========================
+# OS / Misc
+# =========================
+Thumbs.db
