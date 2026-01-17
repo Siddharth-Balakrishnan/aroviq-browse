@@ -84,3 +84,44 @@ Why:
 
 Date: 2026-01-06
 
+---
+
+## D-007 — IPC Protocol Selection
+
+Decision:
+Use REST (HTTP over localhost) for control and query APIs,
+and WebSocket (over localhost) for streaming and event notifications.
+
+Why:
+- REST is simple, debuggable, and inspectable
+- WebSocket supports streaming AI output and async events
+- Avoids premature complexity (gRPC)
+- Clear separation of request/response vs event flows
+
+Date: 2026-01-17
+
+---
+
+## D-008 — Execution Sandbox Strategy (v1)
+
+Decision:
+Use process-level isolation for v1 execution sandboxing.
+
+Details:
+- Commands run as non-privileged user
+- Dedicated runtime working directory
+- Read-only filesystem by default
+- Explicit command allowlist
+- No network access initially
+- Full audit logging
+
+Why:
+- Honest security model for v1
+- Avoids Docker and daemon dependencies
+- Keeps UX simple for solo developers
+- Guard + approval + audit mitigate risk
+
+Date: 2026-01-17
+
+---
+

@@ -113,3 +113,50 @@ Daemon must NEVER:
 - Collaboration
 - Cloud storage of user data
 - Plugin marketplace
+
+## UCA-Lite (Unified Cognitive Architecture – v1 Scope)
+
+AROVIQ BROWSE implements a **UCA-lite** model inspired by:
+https://github.com/ShyamSathish005/uca-architect
+
+UCA-lite is NOT a full cognitive architecture.
+It is a trust and verification scaffold.
+
+In v1, UCA-lite consists of:
+1. Context completeness checks
+2. Confidence estimation (heuristic)
+3. Risk classification (read, write, execute)
+4. Verification routing (user confirmation paths)
+
+UCA-lite governs:
+- how AI suggestions are presented
+- when Guard escalation occurs
+- when execution requires stronger confirmation
+
+UCA-lite does NOT:
+- plan autonomously
+- spawn agents
+- self-execute actions
+
+
+## Daemon Discovery Mechanism
+
+The local runtime daemon advertises its presence via a file-based handshake.
+
+On startup, the daemon writes:
+~/.aroviq/daemon.json
+
+This file contains:
+- PID
+- HTTP port
+- WebSocket port
+- version
+- start timestamp
+
+The browser:
+- checks for this file
+- validates daemon health via /health
+- negotiates capabilities via /capabilities
+
+This approach avoids fixed ports, mDNS, and implicit assumptions.
+
