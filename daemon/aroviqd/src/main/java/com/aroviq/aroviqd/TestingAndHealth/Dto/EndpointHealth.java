@@ -1,7 +1,5 @@
 package com.aroviq.aroviqd.TestingAndHealth.Dto;
 
-import java.util.List;
-
 public class EndpointHealth {
     private String endpoint;
     private String method;
@@ -16,15 +14,35 @@ public class EndpointHealth {
     }
 
     // Getters and Setters
-    public String getEndpoint() { return endpoint; }
-    public void setEndpoint(String endpoint) { this.endpoint = endpoint; }
+    public String getEndpoint() {
+        return endpoint;
+    }
 
-    public String getMethod() { return method; }
-    public void setMethod(String method) { this.method = method; }
+    public void setEndpoint(String endpoint) {
+        this.endpoint = endpoint;
+    }
 
-    public String getStatus() { return status; }
-    public void setStatus(String status) { this.status = status; }
+    public String getMethod() {
+        return method;
+    }
 
-    public String getDescription() { return description; }
-    public void setDescription(String description) { this.description = description; }
+    public void setMethod(String method) {
+        this.method = method;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
 }
