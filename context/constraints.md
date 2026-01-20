@@ -69,3 +69,16 @@ casing, or directory structure unless explicitly instructed.
 
 Correctness and architectural boundaries take precedence
 over conventional Java naming guidelines.
+
+## Root UI Constraint
+
+The daemon may serve a static informational HTML page at "/".
+
+This page is:
+- informational only
+- non-interactive
+- not a control surface
+- not a dashboard
+
+All system interaction must occur via APIs or the browser client.
+
