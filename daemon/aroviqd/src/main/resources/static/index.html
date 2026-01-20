@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AROVIQ Daemon (aroviqd)</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            max-width: 800px;
+            margin: 40px auto;
+            padding: 0 20px;
+            background-color: #f9f9f9;
+        }
+        .container {
+            background-color: #fff;
+            padding: 40px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            border: 1px solid #eee;
+        }
+        h1 {
+            color: #111;
+            margin-top: 0;
+            border-bottom: 2px solid #eee;
+            padding-bottom: 10px;
+        }
+        .status-badge {
+            display: inline-block;
+            background-color: #e6ffed;
+            color: #22863a;
+            padding: 4px 12px;
+            border-radius: 12px;
+            font-size: 0.9em;
+            font-weight: bold;
+            border: 1px solid #22863a33;
+            margin-bottom: 20px;
+        }
+        .description {
+            color: #555;
+            font-size: 1.1em;
+            margin-bottom: 30px;
+        }
+        h2 {
+            font-size: 1.2em;
+            color: #444;
+            margin-top: 30px;
+        }
+        ul {
+            list-style: none;
+            padding: 0;
+        }
+        li {
+            margin-bottom: 10px;
+            padding: 10px;
+            background: #fcfcfc;
+            border: 1px solid #f0f0f0;
+            border-radius: 4px;
+        }
+        code {
+            font-family: SFMono-Regular, Consolas, "Liberation Mono", Menlo, monospace;
+            background-color: #f3f3f3;
+            padding: 2px 4px;
+            border-radius: 3px;
+            font-size: 0.9em;
+        }
+        a {
+            color: #0366d6;
+            text-decoration: none;
+        }
+        a:hover {
+            text-decoration: underline;
+        }
+        footer {
+            margin-top: 40px;
+            font-size: 0.8em;
+            color: #888;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>AROVIQ Daemon (aroviqd)</h1>
+        
+        <div class="status-badge">DAEMON RUNNING</div>
+        
+        <p class="description">
+            This is the local runtime daemon for AROVIQ BROWSE. It serves as the system source of truth, 
+            handling append-only memory, execution logic, and trust evaluation.
+        </p>
+
+        <h2>Available API Endpoints</h2>
+        <ul>
+            <li>
+                <a href="/api/health/status"><code>/api/health/status</code></a> - High-level health and uptime
+            </li>
+            <li>
+                <a href="/api/health/discovery"><code>/api/health/discovery</code></a> - Registered system endpoints
+            </li>
+            <li>
+                <a href="/api/identity"><code>/api/identity</code></a> - Daemon name, version, and PID
+            </li>
+            <li>
+                <a href="/api/capabilities"><code>/api/capabilities</code></a> - Static system capabilities
+            </li>
+            <li>
+                <a href="/actuator/health"><code>/actuator/health</code></a> - Standard Spring Actuator health
+            </li>
+        </ul>
+    </div>
+    <footer>
+        aroviqd v0.0.1-SNAPSHOT &bull; Developer Runtime Browser
+    </footer>
+</body>
+</html>
