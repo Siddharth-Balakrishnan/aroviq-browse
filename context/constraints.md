@@ -38,3 +38,21 @@
 - Minimal configuration
 - No settings explosion
 
+## UI Customization Constraint
+
+User customization is limited to the browser UI layer.
+
+Customization may include:
+- layout changes
+- panels
+- keybindings
+- visualizations
+
+Customization must NOT:
+- alter daemon behavior
+- bypass Guard or UCA
+- execute commands
+- modify memory rules
+
+All customization is client-side and capability-gated.
+
