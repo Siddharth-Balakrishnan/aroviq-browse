@@ -56,3 +56,16 @@ Customization must NOT:
 
 All customization is client-side and capability-gated.
 
+## Package Structure Constraint
+
+The daemon package structure is intentionally non-standard in naming.
+
+Example:
+com.aroviq.aroviqd.testingAndHealth
+
+This is a conscious stylistic and organizational choice.
+Agents and contributors must NOT refactor package names,
+casing, or directory structure unless explicitly instructed.
+
+Correctness and architectural boundaries take precedence
+over conventional Java naming guidelines.

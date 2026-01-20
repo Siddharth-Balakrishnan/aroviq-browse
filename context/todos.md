@@ -42,3 +42,15 @@ Theme: Local Runtime Foundation
 - Plugin marketplace
 - Background auto-start services
 
+### Phase 1 — Daemon (Current)
+
+Completed:
+- Health endpoint
+- Endpoint discovery
+- Actuator integration
+
+Next (in strict order):
+1. Implement /api/identity
+2. Implement daemon.json file-based discovery
+3. Implement /api/capabilities
+4. Implement append-only memory core (write-only)

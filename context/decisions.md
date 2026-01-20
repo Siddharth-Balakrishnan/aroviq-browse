@@ -125,3 +125,21 @@ Date: 2026-01-17
 
 ---
 
+## D-009 — Non-Standard Package Naming
+
+Decision:
+Retain non-standard Java package naming for daemon modules,
+including mixed-case and descriptive grouping such as
+com.aroviq.aroviqd.testingAndHealth.
+
+Why:
+- Improves semantic clarity for the author
+- Reflects logical grouping over convention
+- Avoids premature refactors that do not improve correctness
+
+Impact:
+- Agents and contributors must not refactor packages
+  without explicit instruction.
+
+Date: 2026-01-21
+
