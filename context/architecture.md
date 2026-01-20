@@ -160,3 +160,40 @@ The browser:
 
 This approach avoids fixed ports, mDNS, and implicit assumptions.
 
+## Request / Response Journaling (Daemon)
+
+The AROVIQ daemon implements a dedicated request/response journaling subsystem
+for debugging, traceability, and audit purposes.
+
+This subsystem operates at the HTTP I/O boundary and records all inbound and
+outbound HTTP traffic processed by the daemon.
+
+### Architectural Properties
+
+- Implemented as a Servlet Filter
+- Wraps requests and responses using content-caching wrappers
+- Operates independently of controllers and services
+- Captures full request/response lifecycle per HTTP call
+- Includes standard APIs and Actuator endpoints
+
+### Data Characteristics
+
+- Append-only
+- One JSON object per line (NDJSON)
+- Per-daemon-instance journal file
+- Explicit truncation for large payloads
+
+### Separation of Concerns
+
+Request/response journaling is:
+- NOT append-only system memory
+- NOT application logging
+- NOT exposed via API
+- NOT used for runtime decision-making
+
+It exists solely as a diagnostic and audit aid.
+
+This separation is intentional to preserve correctness,
+trust boundaries, and long-term system clarity.
+
+

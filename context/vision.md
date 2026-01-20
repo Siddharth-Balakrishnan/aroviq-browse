@@ -103,3 +103,13 @@ AROVIQ BROWSE will evolve into:
 
 v1 intentionally avoids scale and feature breadth.
 
+Trust in AROVIQ BROWSE is reinforced through explicit observability.
+
+The system is designed so that developers can inspect, audit,
+and reason about daemon behavior without hidden state or implicit actions.
+
+Per-instance request/response journaling is a concrete example of this
+philosophy: behavior is visible, deterministic, and attributable
+to a specific runtime instance.
+
+

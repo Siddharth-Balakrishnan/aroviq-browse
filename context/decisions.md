@@ -143,3 +143,79 @@ Impact:
 
 Date: 2026-01-21
 
+---
+
+## D-010 — Per-Instance Request/Response Journaling
+
+Decision:
+Implement deterministic, per-instance request/response journaling
+for the AROVIQ daemon using a dedicated HTTP filter.
+
+### Context
+
+During Phase 1 development, it became clear that traditional application
+logging was insufficient for debugging a local control-plane daemon.
+
+Requirements included:
+- Full visibility into HTTP interactions
+- Clear separation between operational logs and system memory
+- Ability to inspect daemon behavior per run
+- Zero impact on daemon authority or behavior
+
+### Decision Details
+
+A dedicated request/response journaling subsystem was introduced with the
+following properties:
+
+- Implemented as a Servlet Filter at the HTTP I/O boundary
+- Wraps HttpServletRequest and HttpServletResponse
+- Captures:
+  - HTTP method and path
+  - Headers
+  - Request body
+  - Response body
+  - Status code
+  - Timing and duration
+- Uses structured NDJSON (one event per line)
+- Explicit truncation for large payloads (10,000 KB limit)
+- One journal file per daemon instance
+- Journal lifecycle bound to daemon lifecycle
+
+### Storage Model
+
+- Journals are written to:
+  ~/.aroviq/logs/
+- File naming includes:
+  - startup timestamp
+  - daemon PID
+- Journals are append-only and immutable per run
+
+### Explicit Non-Goals
+
+The journaling system:
+- Is not exposed via API
+- Is not queryable in v1
+- Is not part of append-only memory
+- Does not influence runtime decisions
+- Does not replace metrics or tracing systems
+
+### Rationale
+
+This design:
+- Preserves daemon determinism
+- Improves debuggability without adding complexity
+- Avoids polluting business logic
+- Aligns with AROVIQ’s “context as infrastructure” philosophy
+
+Alternative approaches (controller logging, AOP, logging frameworks)
+were rejected due to poor separation of concerns or lack of determinism.
+
+### Impact
+
+- Improves trust and debuggability
+- Enables future tooling (log viewers, replay, diffing)
+- Establishes a clear diagnostic boundary early in the project
+
+Date: 2026-01-20
+
+
