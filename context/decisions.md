@@ -275,3 +275,289 @@ This approach:
 - Prevents memory corruption through over-ingestion
 
 Date: 2026-01-21
+
+---
+
+## D-012 — Browser Evolution Strategy (Option 1 → Option 3 → Option 2)
+
+Decision:
+Adopt a staged browser evolution strategy:
+Option 1 (Minimal CEF Shell) → Option 3 (Runtime Console) → Option 2 (Full Browser).
+
+### Context
+
+AROVIQ BROWSE is not intended to be a consumer browser first.
+It is a developer runtime with strong emphasis on:
+- trust boundaries
+- local-first execution
+- explicit user approval
+- clear daemon authority
+
+During Phase 2 planning, three browser approaches were evaluated:
+
+Option 1: Minimal native window with embedded Chromium (CEF), no tabs or address bar.  
+Option 2: Traditional browser shell with tabs, navigation, and address bar.  
+Option 3: Single-purpose runtime console UI focused on system state and approvals.
+
+Each option has different trade-offs in complexity, correctness, and risk.
+
+### Options Evaluated
+
+#### Option 1 — Minimal CEF Shell
+
+Description:
+A native application window embedding Chromium purely as a rendering engine.
+No browsing features are exposed.
+
+Pros:
+- Lowest implementation complexity
+- Clean separation between browser and daemon
+- Minimal OS-specific code
+- Fast iteration and high correctness
+- Easy to discard or evolve
+
+Cons:
+- Does not feel like a browser
+- No real web context initially
+- Limited demo appeal
+
+#### Option 3 — Runtime Console
+
+Description:
+A system control surface implemented using Chromium-rendered internal pages.
+Focuses on daemon status, runtime context, approvals, and diagnostics.
+
+Pros:
+- Strong alignment with AROVIQ’s philosophy
+- Clear identity as a system tool
+- Low risk of feature creep
+- Natural place for trust and approval workflows
+
+Cons:
+- Still not a general-purpose browser
+- Requires deliberate expansion to reach full browsing
+
+#### Option 2 — Full Browser
+
+Description:
+A traditional browser UI with tabs, address bar, navigation, and external websites.
+
+Pros:
+- Familiar to users
+- Immediate access to rich web context
+- Strong positioning as a browser
+
+Cons:
+- Highest complexity
+- High risk of scope creep
+- Risk of becoming “another AI browser”
+- Browser concerns can dominate system design prematurely
+
+### Decision Details
+
+The project will evolve deliberately through all three options:
+
+1. Start with Option 1 to validate:
+   - daemon discovery
+   - lifecycle integration
+   - IPC correctness
+   - platform stability
+
+2. Evolve into Option 3 to:
+   - establish AROVIQ as a runtime control surface
+   - introduce structured context capture
+   - design approval and trust workflows
+
+3. Only later evolve into Option 2 to:
+   - expose controlled web browsing
+   - treat web pages as context sources, not authorities
+
+At each stage, only UI surface area expands.
+Daemon contracts, memory design, and trust boundaries remain unchanged.
+
+### Why This Matters
+
+This staged approach:
+- avoids premature browser complexity
+- preserves daemon-first architecture
+- prevents early AI-browser coupling
+- enables safe growth without rewrites
+
+### Testing & Validation
+
+- Option 1 validated by:
+  - daemon discovery
+  - status rendering
+  - stable startup/shutdown on all platforms
+
+- Option 3 validated by:
+  - runtime context visibility
+  - approval workflows
+  - absence of unintended execution
+
+- Option 2 validated by:
+  - correct isolation between web content and daemon
+  - explicit user-mediated actions
+  - preserved trust boundaries
+
+Date: 2026-01-21
+
+---
+
+## D-013 — Platform Support Strategy (Linux-first, macOS-validated)
+
+Decision:
+Target Linux and macOS for v1, with Linux as the primary development platform
+and macOS as a compatibility validation platform.
+
+Windows support is explicitly deferred.
+
+### Context
+
+The AROVIQ BROWSE architecture consists of:
+- a local daemon (Java-based)
+- a native browser client (CEF-based)
+
+Both components interact closely with the operating system:
+- process lifecycle
+- filesystem semantics
+- windowing systems
+- packaging and distribution
+
+The project is developed primarily by a single author with:
+- daily access to Linux
+- periodic access to macOS
+- limited access to Windows
+
+### Options Evaluated
+
+#### Linux-only
+
+Pros:
+- Simplest development environment
+- Fastest iteration
+
+Cons:
+- Limits early portability
+- Delays macOS validation
+
+#### Linux + macOS
+
+Pros:
+- Covers the two most common developer OS platforms
+- Similar Unix-like semantics
+- Compatible filesystem and process models
+- CEF supports both reliably
+
+Cons:
+- Requires periodic macOS testing
+- Requires thin OS-specific glue code
+
+#### Windows-first or Windows-inclusive
+
+Pros:
+- Large potential user base
+
+Cons:
+- Significantly different process and windowing model
+- Higher maintenance burden
+- Increased packaging and testing complexity
+- Not aligned with current development constraints
+
+### Decision Details
+
+The project will:
+- Use Linux as the canonical development environment
+- Ensure all core browser logic is OS-agnostic
+- Isolate OS-specific behavior in minimal platform modules
+- Validate macOS compatibility at defined checkpoints
+
+Windows support is intentionally deferred until:
+- browser architecture stabilizes
+- trust and memory models are proven
+- packaging strategy matures
+
+### Testing & Validation Strategy
+
+Linux:
+- Daily development and testing
+- Treated as authoritative behavior
+
+macOS:
+- Periodic validation testing
+- Focused on:
+  - application launch
+  - window creation
+  - rendering correctness
+  - daemon discovery
+
+Windows:
+- No testing in v1
+- No assumptions made in code
+- Platform abstraction designed to allow future support
+
+### Why This Matters
+
+This strategy:
+- maximizes development velocity
+- avoids premature platform debt
+- ensures correctness on Unix-like systems
+- keeps future expansion possible without rewrite
+
+Date: 2026-01-21
+
+---
+
+## D-014 — Explicit Browser vs Daemon Repository Separation
+
+Decision:
+Rename and formalize the client-side codebase as `browser/`
+instead of a generic `ui/` directory.
+
+### Context
+
+As AROVIQ BROWSE enters Phase 2 (Browser),
+it became clear that the client is not a simple UI layer.
+
+The browser:
+- embeds Chromium (CEF)
+- manages OS-level windows
+- performs daemon discovery
+- captures runtime system context
+- acts as the execution control surface
+
+Calling this layer `ui/` incorrectly implies:
+- frontend-only logic
+- web-app semantics
+- lack of system responsibility
+
+### Decision Details
+
+The repository structure is updated to:
+
+- `daemon/` — local runtime (source of truth)
+- `browser/` — native client (CEF-based)
+- `context/` — authoritative system documents
+
+The browser directory is further structured into:
+- core (OS-agnostic)
+- platform (Linux/macOS glue)
+- resources (internal pages)
+- build (CEF tooling)
+
+### Why This Matters
+
+This separation:
+- reinforces daemon-first architecture
+- prevents logic leakage across boundaries
+- enables correct mental models for agents
+- supports future native packaging (.deb, .app, .exe)
+- avoids long-term structural debt
+
+### Impact
+
+- One-time rename from `ui/` to `browser/`
+- No behavioral changes
+- Structure is now locked for Phase 2+
+
+Date: 2026-01-21
