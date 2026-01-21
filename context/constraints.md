@@ -82,3 +82,11 @@ This page is:
 
 All system interaction must occur via APIs or the browser client.
 
+## Failure-Mode Guarantees (Daemon v1)
+
+- The daemon must not crash due to memory write failures.
+- Append-only memory integrity takes precedence over availability.
+- Partial last-entry corruption is acceptable after abrupt termination.
+- Journaling and memory failures are isolated from each other.
+- Discovery failures do not block daemon startup.
+- No automatic retries or recovery logic exists in v1.
