@@ -7,14 +7,14 @@ Theme: Local Runtime Foundation
 ---
 
 ## Immediate TODOs
-- Initialize monorepo
-- Create Java daemon project
-- Implement /health endpoint
-- Implement /identity endpoint
-- Implement /capabilities endpoint
-- Implement append-only memory core
-- Verify crash safety
-- Wire browser daemon discovery
+- [x] Initialize monorepo
+- [x] Create Java daemon project
+- [x] Implement /health endpoint
+- [x] Implement /identity endpoint
+- [x] Implement /capabilities endpoint
+- [x] Implement append-only memory core
+- [ ] Verify crash safety
+- [ ] Wire browser daemon discovery
 
 ---
 
@@ -50,10 +50,9 @@ Completed:
 - File-based discovery
 - Request/response journaling
 - Static informational root page
+- Append-only system memory (write-only, v1)
 
 Next:
-- Implement append-only system memory (write-only, v1)
-
-Note:
-Append-only memory design is locked and reviewed.
-Implementation must strictly follow documented constraints.
+- Verify crash safety
+- Wire browser daemon discovery
+- Browser → daemon context ingestion
