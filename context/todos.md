@@ -42,20 +42,18 @@ Theme: Local Runtime Foundation
 - Plugin marketplace
 - Background auto-start services
 
-### Phase 1 — Daemon (Status)
+### Phase 1 — Daemon
 
 Completed:
-- Spring Boot daemon initialization
-- Health and discovery endpoints
-- Identity endpoint
-- Capabilities endpoint
-- File-based daemon discovery (daemon.json)
-- Static root informational page
-- Request/response journaling (per-instance)
+- Control-plane daemon
+- Identity and capability endpoints
+- File-based discovery
+- Request/response journaling
+- Static informational root page
 
-Remaining:
-- Append-only memory core (write-only)
+Next:
+- Implement append-only system memory (write-only, v1)
 
-Phase 1 Note:
-The daemon control plane, observability, and diagnostics are complete.
-Remaining work is limited to system memory implementation.
+Note:
+Append-only memory design is locked and reviewed.
+Implementation must strictly follow documented constraints.

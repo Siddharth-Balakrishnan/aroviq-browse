@@ -112,4 +112,11 @@ Per-instance request/response journaling is a concrete example of this
 philosophy: behavior is visible, deterministic, and attributable
 to a specific runtime instance.
 
+AROVIQ treats memory as infrastructure.
 
+Rather than relying on model-specific memory or long conversational
+context, the system externalizes verified understanding into
+structured, append-only memory.
+
+This enables consistent reasoning across models, tools,
+and environments while preserving trust and auditability.

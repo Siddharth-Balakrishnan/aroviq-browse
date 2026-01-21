@@ -196,4 +196,45 @@ It exists solely as a diagnostic and audit aid.
 This separation is intentional to preserve correctness,
 trust boundaries, and long-term system clarity.
 
+## Append-Only System Memory
 
+AROVIQ implements an append-only system memory to persist
+verified system understanding across daemon lifecycles.
+
+This memory is designed to be:
+- immutable per entry
+- durable across restarts
+- human-inspectable
+- machine-parsable
+- model-agnostic
+
+### Storage Model
+
+- Stored as newline-delimited JSON (NDJSON)
+- One entry per line
+- Append-only write semantics
+- Flush after every write
+- Partial last entry tolerated on crash
+
+### Separation of Concerns
+
+Append-only memory is:
+- NOT request/response journaling
+- NOT application logging
+- NOT vector storage
+- NOT execution history
+- NOT model scratchpad
+
+It stores structured truth, not activity.
+
+### Intended Use
+
+Append-only memory acts as the canonical source for:
+- decisions
+- constraints
+- identity snapshots
+- capability snapshots
+- approved observations
+
+This memory enables consistent context re-hydration
+across tools, models, and environments.

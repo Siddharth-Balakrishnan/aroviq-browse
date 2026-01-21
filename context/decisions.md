@@ -218,4 +218,60 @@ were rejected due to poor separation of concerns or lack of determinism.
 
 Date: 2026-01-20
 
+---
 
+## D-011 — Append-Only Memory as Structured Truth Ledger
+
+Decision:
+Implement append-only memory as a structured, immutable ledger
+of system understanding rather than free-form text or vector storage.
+
+### Context
+
+Agentic IDEs and AI tools do not share model memory.
+They reconstruct context per invocation from controlled inputs.
+
+To support cross-model, cross-tool, and cross-website continuity,
+AROVIQ requires a memory system that is:
+- durable
+- auditable
+- model-agnostic
+- re-hydratable
+
+### Decision Details
+
+Append-only memory entries are:
+- structured JSON objects
+- schema-versioned
+- semantically categorized
+- appended sequentially
+
+Memory storage uses NDJSON to preserve append-only semantics
+and enable future segmentation.
+
+Vectors and embeddings are explicitly excluded from the source
+of truth and may only exist as derived, regenerable indexes.
+
+### Promotion Rules
+
+Only high-confidence, user-approved, or system-verified
+information may be promoted into append-only memory.
+
+Raw conversations, logs, and transient data are excluded.
+
+### Rationale
+
+This approach:
+- preserves trust and inspectability
+- avoids model lock-in
+- enables selective retrieval
+- reduces long-term token usage indirectly
+- supports cross-environment context reuse
+
+### Impact
+
+- Establishes a durable cognitive ledger
+- Enables consistent AI behavior across tools
+- Prevents memory corruption through over-ingestion
+
+Date: 2026-01-21
