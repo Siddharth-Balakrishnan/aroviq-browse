@@ -51,8 +51,9 @@ Completed:
 - Request/response journaling
 - Static informational root page
 - Append-only system memory (write-only, v1)
-
-Next:
 - Verify crash safety
 - Wire browser daemon discovery
 - Browser → daemon context ingestion
+
+
+Next:
